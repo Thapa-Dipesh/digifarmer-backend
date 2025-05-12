@@ -140,3 +140,6 @@ ehthumbs.db
 
 # Local environment settings
 .local
+
+# prisma generated files
+src/generated/prisma
