@@ -75,7 +75,7 @@ export const loginUser = async (req, res) => {
 
     const user = await prima.user.findUnique({
       where: {
-        OR: [email, phoneNo],
+        email, phoneNo
       },
     });
 
@@ -104,7 +104,10 @@ export const loginUser = async (req, res) => {
       }
     );
 
-    
+    res.cookie("access_token", token, {
+      httpOnly: true,
+      maxAge: 60 * 60 * 1000, // 1 hour in milliseconds 
+    });
 
     return res.status(200).json({
       message: "Login successful",
@@ -152,3 +155,17 @@ export const loginFirebase = async (req, res) => {
     });
   }
 };
+
+export const logoutUser = async (req, res) => {
+  try {
+    res.clearCookie("access_token");
+    return res.status(200).json({
+      message: "Logout successful",
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+}
