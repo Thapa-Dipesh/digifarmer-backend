@@ -3,18 +3,18 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const registerUser = async (req, res) => {
-  const body = req.body;
+  const { name, email, password } = req.body;
 
   try {
-    if (!body.email || !body.password || !body.phoneNo) {
+    if (!name || !email || !password) {
       return res.status(400).json({
-        message: "These fields are required",
+        message: "All fields are required",
       });
     }
 
     const existingUser = await prima.user.findUnique({
       where: {
-        email: body.email,
+        email,
       },
     });
 
@@ -24,19 +24,13 @@ export const registerUser = async (req, res) => {
       });
     }
 
-    const hashedPassword = await bcrypt.hash(body.password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await prima.user.create({
       data: {
-        email: body.email,
+        name,
+        email,
         password: hashedPassword,
-        phoneNo: body.phoneNo,
-        name: body.name,
-        provience: body.province,
-        city: body.city,
-        wardNo: body.wardNo,
-        deviceToken: body.deviceToken,
-        firebaseToken: body.firebaseToken,
       },
     });
 
@@ -44,9 +38,8 @@ export const registerUser = async (req, res) => {
       message: "User created successfully",
       user: {
         id: user.id,
-        email: user.email,
-        phoneNo: user.phoneNo,
-        deviceToken: user.deviceToken,
+        name,
+        email,
       },
     });
   } catch (error) {
@@ -75,7 +68,8 @@ export const loginUser = async (req, res) => {
 
     const user = await prima.user.findUnique({
       where: {
-        email, phoneNo
+        email,
+        phoneNo,
       },
     });
 
@@ -106,7 +100,7 @@ export const loginUser = async (req, res) => {
 
     res.cookie("access_token", token, {
       httpOnly: true,
-      maxAge: 60 * 60 * 1000, // 1 hour in milliseconds 
+      maxAge: 60 * 60 * 1000, // 1 hour in milliseconds
     });
 
     return res.status(200).json({
@@ -156,6 +150,7 @@ export const loginFirebase = async (req, res) => {
   }
 };
 
+
 export const logoutUser = async (req, res) => {
   try {
     res.clearCookie("access_token");
@@ -168,4 +163,4 @@ export const logoutUser = async (req, res) => {
       message: "Internal server error",
     });
   }
-}
+};
