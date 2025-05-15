@@ -5,11 +5,15 @@ import {
   logoutUser,
   registerUser,
 } from "../controllers/user.controller.js";
+import {
+  validateLogIn,
+  validateSignUp,
+} from "../middlewares/validation.middleware.js";
 
 const router = express.Router();
 
-router.post("/register", registerUser);
-router.post("/login", loginUser);
+router.post("/register", validateSignUp, registerUser);
+router.post("/login", validateLogIn, loginUser);
 router.post("/loginfirebase", loginFirebase);
 router.post("/logout", logoutUser);
 
