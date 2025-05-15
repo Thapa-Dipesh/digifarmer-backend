@@ -150,6 +150,37 @@ export const loginFirebase = async (req, res) => {
   }
 };
 
+export const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { name, email, password, phoneNo, province, city, wardNo } = req.body;
+
+  try {
+    const user = await prima.user.update({
+      where: {
+        id: parseInt(id),
+      },
+      data: {
+        name,
+        email,
+        phoneNo,
+        password,
+        province,
+        city,
+        wardNo,
+      },
+    });
+
+    return res.status(200).json({
+      message: "User updated successfully",
+      user,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
 
 export const logoutUser = async (req, res) => {
   try {
