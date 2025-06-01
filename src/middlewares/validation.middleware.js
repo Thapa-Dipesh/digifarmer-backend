@@ -30,3 +30,18 @@ export const validateLogIn = (req, res, next) => {
   }
   next();
 };
+
+export const validatePost = (req, res, next) => {
+  const schema = Joi.object({
+    title: Joi.string().min(5).max(100).required(),
+    content: Joi.string().min(10).required(),
+  });
+
+  const { error } = schema.validate(req.body);
+  if (error) {
+    return res.status(400).json({
+      message: error.details[0].message,
+    });
+  }
+  next();
+};

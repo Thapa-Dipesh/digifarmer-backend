@@ -12,9 +12,11 @@ app.use(cookieParser());
 
 // Import routes
 import userRoutes from "./routes/user.route.js";
+import postRoutes from "./routes/post.route.js";
 
 // Use routes
 app.use("/api/v1/auth", userRoutes);
+app.use("/api/v1/posts", postRoutes);
 
 // Start the server
 app.listen(port, () => {
