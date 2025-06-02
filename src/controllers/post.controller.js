@@ -52,6 +52,12 @@ export const getPosts = async (req, res) => {
             email: true,
           },
         },
+        _count: {
+          select: {
+            comments: true,
+            likes: true,
+          },
+        },
       },
       orderBy: {
         createdAt: "desc",
@@ -82,6 +88,12 @@ export const getPostById = async (req, res) => {
             id: true,
             name: true,
             email: true,
+          },
+        },
+        _count: {
+          select: {
+            comments: true,
+            likes: true,
           },
         },
       },
