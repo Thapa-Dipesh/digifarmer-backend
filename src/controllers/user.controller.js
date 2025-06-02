@@ -1,4 +1,4 @@
-import prima from "../config/db.config.js";
+import prisma from "../config/db.config.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -12,7 +12,7 @@ export const registerUser = async (req, res) => {
       });
     }
 
-    const existingUser = await prima.user.findUnique({
+    const existingUser = await prisma.user.findUnique({
       where: {
         email,
       },
@@ -26,7 +26,7 @@ export const registerUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await prima.user.create({
+    const user = await prisma.user.create({
       data: {
         name,
         email,
@@ -66,7 +66,7 @@ export const loginUser = async (req, res) => {
       });
     }
 
-    const user = await prima.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         email,
         phoneNo,
@@ -129,7 +129,7 @@ export const loginFirebase = async (req, res) => {
         message: "Firebase token is required",
       });
     }
-    const user = await prima.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
         firebaseToken,
       },
@@ -155,7 +155,7 @@ export const updateUser = async (req, res) => {
   const { name, email, password, phoneNo, province, city, wardNo } = req.body;
 
   try {
-    const user = await prima.user.update({
+    const user = await prisma.user.update({
       where: {
         id: parseInt(id),
       },

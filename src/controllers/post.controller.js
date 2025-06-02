@@ -1,4 +1,4 @@
-import prima from "../config/db.config.js";
+import prisma from "../config/db.config.js";
 
 export const createPost = async (req, res) => {
   const user = req.user;
@@ -14,7 +14,7 @@ export const createPost = async (req, res) => {
     }
 
     const image = file && file.length > 0 ? file[0].filename : null;
-    const post = await prima.posts.create({
+    const post = await prisma.posts.create({
       data: {
         title,
         content,
@@ -43,7 +43,7 @@ export const createPost = async (req, res) => {
 
 export const getPosts = async (req, res) => {
   try {
-    const posts = await prima.posts.findMany({
+    const posts = await prisma.posts.findMany({
       include: {
         user: {
           select: {
@@ -74,7 +74,7 @@ export const getPostById = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const post = await prima.posts.findUnique({
+    const post = await prisma.posts.findUnique({
       where: { id: parseInt(id) },
       include: {
         user: {
@@ -112,7 +112,7 @@ export const updatePost = async (req, res) => {
   const { title, content } = req.body;
 
   try {
-    const post = await prima.posts.findUnique({
+    const post = await prisma.posts.findUnique({
       where: { id: parseInt(id) },
     });
 
@@ -129,7 +129,7 @@ export const updatePost = async (req, res) => {
     }
 
     const image = file && file.length > 0 ? file[0].filename : post.image;
-    const updatedPost = await prima.posts.update({
+    const updatedPost = await prisma.posts.update({
       where: { id: parseInt(id) },
       data: {
         title,
@@ -155,7 +155,7 @@ export const deletePost = async (req, res) => {
   const user = req.user;
 
   try {
-    const post = await prima.posts.findUnique({
+    const post = await prisma.posts.findUnique({
       where: { id: parseInt(id) },
     });
 
@@ -171,7 +171,7 @@ export const deletePost = async (req, res) => {
       });
     }
 
-    await prima.posts.delete({
+    await prisma.posts.delete({
       where: { id: parseInt(id) },
     });
 
