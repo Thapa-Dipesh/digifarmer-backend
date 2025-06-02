@@ -2,7 +2,9 @@ import prima from "../config/db.config.js";
 
 export const createPost = async (req, res) => {
   const user = req.user;
-  const { title, content, image } = req.body;
+  const file = req.files;
+
+  const { title, content } = req.body;
 
   try {
     if (!title || !content) {
@@ -11,6 +13,7 @@ export const createPost = async (req, res) => {
       });
     }
 
+    const image = file && file.length > 0 ? file[0].filename : null;
     const post = await prima.posts.create({
       data: {
         title,
@@ -105,7 +108,8 @@ export const getPostById = async (req, res) => {
 export const updatePost = async (req, res) => {
   const { id } = req.params;
   const user = req.user;
-  const { title, content, image } = req.body;
+  const file = req.files;
+  const { title, content } = req.body;
 
   try {
     const post = await prima.posts.findUnique({
@@ -124,6 +128,7 @@ export const updatePost = async (req, res) => {
       });
     }
 
+    const image = file && file.length > 0 ? file[0].filename : post.image;
     const updatedPost = await prima.posts.update({
       where: { id: parseInt(id) },
       data: {
