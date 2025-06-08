@@ -1,6 +1,6 @@
 # digifarmer-backend
 
-A Node.js backend API for a social platform, built with Express, Prisma, and PostgreSQL. It supports user authentication, post creation (with image upload), likes, and comments.
+A Node.js backend API for a disease detection mobile app built with Express, Prisma, and PostgreSQL. It supports user authentication, post creation (with image upload), likes, and comments.
 
 ## Features
 
