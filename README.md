@@ -108,7 +108,3 @@ A Node.js backend API for a social platform, built with Express, Prisma, and Pos
 - Uploaded images are stored in `public/uploads/`.
 - All protected routes require a valid JWT token in `Authorization` header as `Bearer <token>`.
 - Prisma client is generated in `src/generated/prisma`.
-
-## License
-
-[MIT](LICENSE)
