@@ -1,6 +1,6 @@
 # digifarmer-backend
 
-A Node.js backend API for a disease detection mobile app built with Express, Prisma, and PostgreSQL. It supports user authentication, post creation (with image upload), likes, and comments.
+A Node.js backend API for a maize disease detection mobile app built with Express, Prisma, and PostgreSQL. It supports user authentication, post creation (with image upload), likes, and comments.
 
 ## Features
 
@@ -41,12 +41,14 @@ A Node.js backend API for a disease detection mobile app built with Express, Pri
 ### Installation
 
 1. **Clone the repository:**
+
    ```sh
-   git clone <repo-url>
+   git clone https://github.com/Thapa-Dipesh/digifarmer-backend
    cd digifarmer-backend
    ```
 
 2. **Install dependencies:**
+
    ```sh
    pnpm install
    ```
@@ -63,11 +65,13 @@ A Node.js backend API for a disease detection mobile app built with Express, Pri
    ```
 
 4. **Run database migrations:**
+
    ```sh
    pnpm exec prisma migrate deploy
    ```
 
 5. **Start the server:**
+
    ```sh
    pnpm run dev
    ```
