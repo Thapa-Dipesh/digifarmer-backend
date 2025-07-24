@@ -2,7 +2,7 @@ import prisma from "../config/db.config.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
- const admin = (await import("../config/firebaseConfig.js")).default;
+const admin = (await import("../config/firebaseConfig.js")).default;
 
 export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -138,7 +138,7 @@ export const loginFirebase = async (req, res) => {
     const { uid, email, phone_number, name } = decodedToken;
 
     // Check if user exists in our database
-    let user = await prima.user.findFirst({
+    let user = await prisma.user.findFirst({
       where: {
         OR: [{ firebaseUid: uid }, { email: email || "" }],
       },
@@ -146,7 +146,7 @@ export const loginFirebase = async (req, res) => {
 
     // If user doesn't exist, create a new one
     if (!user) {
-      user = await prima.user.create({
+      user = await prisma.user.create({
         data: {
           email: email || null,
           phoneNo: phone_number || null,
@@ -159,7 +159,7 @@ export const loginFirebase = async (req, res) => {
       });
     } else {
       // Update the user's Firebase token
-      user = await prima.user.update({
+      user = await prisma.user.update({
         where: { id: user.id },
         data: {
           firebaseToken: idToken,
